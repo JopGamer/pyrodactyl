@@ -27,8 +27,17 @@ class LoginController extends AbstractLoginController
    * base authentication view component. React will take over at this point and
    * turn the login area into an SPA.
    */
-  public function index(): View
+  public function index(Request $request): View|\Illuminate\Http\RedirectResponse
   {
+    // Check if auto redirect is enabled and OpenID is configured
+    // Allow bypass with ?bypass_redirect=true parameter
+    if (config('openid.auto_redirect', false) && 
+        config('openid.enabled', false) && 
+        config('openid.client_id') &&
+        !$request->query('bypass_redirect')) {
+      return redirect()->route('auth.openid');
+    }
+
     return $this->view->make('templates/auth.core');
   }
 

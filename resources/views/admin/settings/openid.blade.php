@@ -39,6 +39,19 @@
                                     <p class="text-muted small">Allow users to login using an external OpenID Connect provider.</p>
                                 </div>
                             </div>
+                            <div class="form-group col-md-4">
+                                <label class="control-label">Automatic Redirect</label>
+                                <div>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="auto_redirect" value="1" 
+                                                @if(old('auto_redirect', $current['auto_redirect'])) checked @endif> 
+                                            Automatically redirect to OpenID Connect provider
+                                        </label>
+                                    </div>
+                                    <p class="text-muted small">When enabled, users visiting the login page will be automatically redirected to the OpenID Connect provider.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

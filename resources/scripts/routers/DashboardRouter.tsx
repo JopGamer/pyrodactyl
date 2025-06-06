@@ -1,6 +1,6 @@
 import { useStoreState } from 'easy-peasy';
 import { Fragment, Suspense, useEffect, useRef, useState } from 'react';
-import { NavLink, Route, Routes, useLocation } from 'react-router-dom';
+import { NavLink, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 
 import routes from '@/routers/routes';
 
@@ -27,6 +27,10 @@ import http from '@/api/http';
 export default () => {
     const location = useLocation();
     const rootAdmin = useStoreState((state) => state.user.data!.rootAdmin);
+    const user = useStoreState((state) => state.user.data);
+    
+    // Check if user is authenticated via OAuth (has external_id)
+    const isOAuthUser = user?.externalId != null;
 
     // ************************** BEGIN SIDEBAR GESTURE ************************** //
 
@@ -174,7 +178,10 @@ export default () => {
         const HighlightOffset: number = 8;
 
         if (pathname.endsWith(`/`) && ButtonHome != null) return (ButtonHome as any).offsetTop + HighlightOffset;
-        if (pathname.endsWith(`/account`) && ButtonSettings != null)
+        // For OAuth users, /account path should redirect to /account/api, so highlight the API button
+        if (pathname.endsWith(`/account`) && isOAuthUser && ButtonApi != null)
+            return (ButtonApi as any).offsetTop + HighlightOffset;
+        if (pathname.endsWith(`/account`) && !isOAuthUser && ButtonSettings != null)
             return (ButtonSettings as any).offsetTop + HighlightOffset;
         if (pathname.endsWith('/api') && ButtonApi != null) return (ButtonApi as any).offsetTop + HighlightOffset;
         if (pathname.endsWith('/ssh') && ButtonSSH != null) return (ButtonSSH as any).offsetTop + HighlightOffset;
@@ -286,10 +293,12 @@ export default () => {
                         <HugeIconsSsh fill='currentColor' />
                         <p>SSH Keys</p>
                     </NavLink>
-                    <NavLink to={'/account'} end className='flex flex-row items-center' ref={NavigationSettings}>
-                        <HugeIconsDashboardSettings fill='currentColor' />
-                        <p>Settings</p>
-                    </NavLink>
+                    {!isOAuthUser && (
+                        <NavLink to={'/account'} end className='flex flex-row items-center' ref={NavigationSettings}>
+                            <HugeIconsDashboardSettings fill='currentColor' />
+                            <p>Settings</p>
+                        </NavLink>
+                    )}
                 </ul>
             </MainSidebar>
 
@@ -303,13 +312,29 @@ export default () => {
                         <Routes>
                             <Route path='' element={<DashboardContainer />} />
 
-                            {routes.account.map(({ route, component: Component }) => (
-                                <Route
-                                    key={route}
-                                    path={`/account/${route}`.replace('//', '/')}
-                                    element={<Component />}
+                            {routes.account
+                                .filter(({ route }) => {
+                                    // Hide the main account settings route (empty route) for OAuth users
+                                    if (isOAuthUser && route === '') {
+                                        return false;
+                                    }
+                                    return true;
+                                })
+                                .map(({ route, component: Component }) => (
+                                    <Route
+                                        key={route}
+                                        path={`/account/${route}`.replace('//', '/')}
+                                        element={<Component />}
+                                    />
+                                ))}
+
+                            {/* Redirect OAuth users trying to access /account to /account/api */}
+                            {isOAuthUser && (
+                                <Route 
+                                    path='/account' 
+                                    element={<Navigate to='/account/api' replace />} 
                                 />
-                            ))}
+                            )}
 
                             <Route path='*' element={<NotFound />} />
                         </Routes>

@@ -35,6 +35,7 @@ class AssetComposer
       ],
       'openid' => [
         'enabled' => config('openid.enabled', false),
+        'auto_redirect' => config('openid.auto_redirect', false),
         'client_id' => config('openid.client_id', ''),
         'issuer' => config('openid.issuer', ''),
         'name' => config('openid.name', ''),

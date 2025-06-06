@@ -40,6 +40,7 @@ class OpenIDController extends Controller
         return view('admin.settings.openid', [
             'current' => [
                 'enabled' => $this->settings->get('settings::openid:enabled', false),
+                'auto_redirect' => $this->settings->get('settings::openid:auto_redirect', false),
                 'client_id' => $this->settings->get('settings::openid:client_id', ''),
                 'client_secret' => $this->settings->get('settings::openid:client_secret', ''),
                 'issuer' => $this->settings->get('settings::openid:issuer', ''),
@@ -62,6 +63,7 @@ class OpenIDController extends Controller
 
         // Save all OpenID Connect settings
         $this->settings->set('settings::openid:enabled', $data['enabled'] ?? false);
+        $this->settings->set('settings::openid:auto_redirect', $data['auto_redirect'] ?? false);
         $this->settings->set('settings::openid:client_id', $data['client_id'] ?? '');
         $this->settings->set('settings::openid:client_secret', $data['client_secret'] ?? '');
         $this->settings->set('settings::openid:issuer', $data['issuer'] ?? '');

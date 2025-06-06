@@ -30,6 +30,7 @@ interface ExtendedWindow extends Window {
         uuid: string;
         username: string;
         email: string;
+        external_id?: string | null;
 
         root_admin: boolean;
         use_totp: boolean;
@@ -51,6 +52,7 @@ const App = () => {
             useTotp: PterodactylUser.use_totp,
             createdAt: new Date(PterodactylUser.created_at),
             updatedAt: new Date(PterodactylUser.updated_at),
+            externalId: PterodactylUser.external_id,
         });
     }
 

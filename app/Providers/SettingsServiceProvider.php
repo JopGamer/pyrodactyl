@@ -36,6 +36,7 @@ class SettingsServiceProvider extends ServiceProvider
     'openid:redirect',
     'openid:discovery_url',
     'openid:disable_registration',
+    'openid:auto_redirect',
     'openid:name',
     'openid:icon',
     'pterodactyl:guzzle:timeout',
@@ -124,7 +125,7 @@ class SettingsServiceProvider extends ServiceProvider
       $config->set(str_replace(':', '.', $key), $value);
       
       // Special handling for services.openid mapping from openid config
-      if (str_starts_with($key, 'openid:') && !in_array($key, ['openid:enabled', 'openid:name', 'openid:icon'])) {
+      if (str_starts_with($key, 'openid:') && !in_array($key, ['openid:enabled', 'openid:auto_redirect', 'openid:name', 'openid:icon'])) {
         $serviceKey = 'services.' . str_replace(':', '.', $key);
         $config->set($serviceKey, $value);
       }

@@ -11,6 +11,7 @@ export interface UserData {
     useTotp: boolean;
     createdAt: Date;
     updatedAt: Date;
+    externalId?: string | null;
 }
 
 export interface UserStore {

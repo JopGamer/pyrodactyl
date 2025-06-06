@@ -10,6 +10,7 @@ class OpenIDSettingsFormRequest extends AdminFormRequest
     {
         $rules = [
             'enabled' => 'nullable|boolean',
+            'auto_redirect' => 'nullable|boolean',
             'name' => 'nullable|string|max:191',
             'icon' => 'nullable|string|max:191',
             'redirect' => 'nullable|url|max:512',
@@ -33,6 +34,7 @@ class OpenIDSettingsFormRequest extends AdminFormRequest
     {
         return [
             'enabled' => 'Enable OpenID Connect',
+            'auto_redirect' => 'Automatic Redirect',
             'client_id' => 'Client ID',
             'client_secret' => 'Client Secret',
             'issuer' => 'Issuer URL',
