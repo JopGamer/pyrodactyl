@@ -11,14 +11,17 @@ use Pterodactyl\Facades\Activity;
 use Illuminate\Contracts\View\View;
 use Illuminate\Contracts\View\Factory as ViewFactory;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Pterodactyl\Contracts\Repository\SettingsRepositoryInterface;
 
 class LoginController extends AbstractLoginController
 {
   /**
    * LoginController constructor.
    */
-  public function __construct(private ViewFactory $view)
-  {
+  public function __construct(
+    private ViewFactory $view,
+    private SettingsRepositoryInterface $settings
+  ) {
     parent::__construct();
   }
 
@@ -31,9 +34,9 @@ class LoginController extends AbstractLoginController
   {
     // Check if auto redirect is enabled and OpenID is configured
     // Allow bypass with ?bypass_redirect=true parameter
-    if (config('openid.auto_redirect', false) && 
-        config('openid.enabled', false) && 
-        config('openid.client_id') &&
+    if ($this->settings->get('settings::openid:auto_redirect', false) && 
+        $this->settings->get('settings::openid:enabled', false) && 
+        $this->settings->get('settings::openid:client_id') &&
         !$request->query('bypass_redirect')) {
       return redirect()->route('auth.openid');
     }

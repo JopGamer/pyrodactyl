@@ -5,6 +5,7 @@ namespace Pterodactyl\Http\Controllers\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Contracts\View\View;
 use Laravel\Socialite\Facades\Socialite;
 use Pterodactyl\Models\User;
 use Pterodactyl\Facades\Activity;
@@ -12,15 +13,32 @@ use Pterodactyl\Events\Auth\DirectLogin;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
 use Ramsey\Uuid\Uuid;
+use Pterodactyl\Contracts\Repository\SettingsRepositoryInterface;
 
 class OpenIDController extends AbstractLoginController
 {
+    /**
+     * OpenIDController constructor.
+     */
+    public function __construct(
+        private SettingsRepositoryInterface $settings
+    ) {
+        parent::__construct();
+    }
     /**
      * Redirect the user to the OpenID Connect provider authentication page.
      */
     public function redirect(): RedirectResponse
     {
         return Socialite::driver('openid')->redirect();
+    }
+
+    /**
+     * Show the account required error page.
+     */
+    public function accountRequired(): View
+    {
+        return view('auth.openid-account-required');
     }
 
     /**
@@ -65,6 +83,19 @@ class OpenIDController extends AbstractLoginController
                 ->property('error', $e->getMessage())
                 ->log();
                 
+            // Handle specific case where user doesn't have an account
+            if ($e->getMessage() === 'no_account_exists') {
+                if ($request->wantsJson()) {
+                    return new JsonResponse([
+                        'error' => 'Account required',
+                        'message' => 'You need to purchase a server to access this panel.',
+                        'redirect' => route('auth.openid.account-required')
+                    ], 403);
+                }
+                
+                return redirect()->route('auth.openid.account-required');
+            }
+                
             if ($request->wantsJson()) {
                 return new JsonResponse([
                     'error' => 'OpenID Connect authentication failed',
@@ -72,7 +103,7 @@ class OpenIDController extends AbstractLoginController
                 ], 400);
             }
             
-            return redirect()->route('auth.login')->withErrors([
+            return redirect()->route('auth.login', ['bypass_redirect' => 'true'])->withErrors([
                 'openid' => 'OpenID Connect authentication failed: ' . $e->getMessage()
             ]);
         }
@@ -100,8 +131,8 @@ class OpenIDController extends AbstractLoginController
         }
         
         // Check if registration is disabled
-        if (config('services.openid.disable_registration', false)) {
-            throw new \Exception('User registration via OpenID Connect is disabled. Please contact an administrator.');
+        if ($this->settings->get('settings::openid:disable_registration', false)) {
+            throw new \Exception('no_account_exists');
         }
         
         // Create new user

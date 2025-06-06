@@ -52,6 +52,19 @@
                                     <p class="text-muted small">When enabled, users visiting the login page will be automatically redirected to the OpenID Connect provider.</p>
                                 </div>
                             </div>
+                            <div class="form-group col-md-4">
+                                <label class="control-label">Disable Registration</label>
+                                <div>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="disable_registration" value="1" 
+                                                @if(old('disable_registration', $current['disable_registration'])) checked @endif> 
+                                            Disable new account creation via OpenID
+                                        </label>
+                                    </div>
+                                    <p class="text-muted small">When enabled, only existing users can login via OpenID. New users must have accounts created manually first.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -136,7 +149,8 @@
                             <p class="mt-2">
                                 <strong>User Account Linking:</strong> Users will be matched by email address. 
                                 If a user with the same email exists, they will be automatically linked to the OIDC account.
-                                If no matching user exists, authentication will fail and the user must be created manually first.
+                                If no matching user exists and registration is disabled, the user will be shown an error page 
+                                explaining they need to purchase a server to access the panel.
                             </p>
                         </div>
                         

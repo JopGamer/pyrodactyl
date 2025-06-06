@@ -38,6 +38,7 @@ Route::middleware(['throttle:authentication'])->group(function () {
 Route::middleware(['guest'])->group(function () {
   Route::get('/openid', [Auth\OpenIDController::class, 'redirect'])->name('auth.openid');
   Route::get('/openid/callback', [Auth\OpenIDController::class, 'callback'])->name('auth.openid.callback');
+  Route::get('/openid/account-required', [Auth\OpenIDController::class, 'accountRequired'])->name('auth.openid.account-required');
 });
 
 // Password reset routes. This endpoint is hit after going through
