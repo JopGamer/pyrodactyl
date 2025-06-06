@@ -34,6 +34,12 @@ Route::middleware(['throttle:authentication'])->group(function () {
     ->middleware('captcha');
 });
 
+// OpenID Connect routes
+Route::middleware(['guest'])->group(function () {
+  Route::get('/openid', [Auth\OpenIDController::class, 'redirect'])->name('auth.openid');
+  Route::get('/openid/callback', [Auth\OpenIDController::class, 'callback'])->name('auth.openid.callback');
+});
+
 // Password reset routes. This endpoint is hit after going through
 // the forgot password routes to acquire a token (or after an account
 // is created).

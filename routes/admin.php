@@ -70,6 +70,7 @@ Route::group(['prefix' => 'settings'], function () {
   Route::get('/advanced', [Admin\Settings\AdvancedController::class, 'index'])->name('admin.settings.advanced');
 
   Route::get('/captcha', [Admin\Settings\CaptchaController::class, 'index'])->name('admin.settings.captcha');
+  Route::get('/openid', [Admin\Settings\OpenIDController::class, 'index'])->name('admin.settings.openid');
 
   Route::post('/mail/test', [Admin\Settings\MailController::class, 'test'])->name('admin.settings.mail.test');
 
@@ -78,6 +79,8 @@ Route::group(['prefix' => 'settings'], function () {
   Route::patch('/advanced', [Admin\Settings\AdvancedController::class, 'update']);
   Route::patch('/captcha', [Admin\Settings\CaptchaController::class, 'update'])
     ->name('admin.settings.captcha.update');
+  Route::patch('/openid', [Admin\Settings\OpenIDController::class, 'update'])
+    ->name('admin.settings.openid.update');
 });
 
 /*

@@ -31,7 +31,7 @@ function LoginContainer() {
     const mCaptchaRef = useRef<{ reset: () => void }>(null);
 
     const { clearFlashes, clearAndAddHttpError } = useFlash();
-    const { captcha } = useStoreState((state) => state.settings.data!);
+    const { captcha, openid } = useStoreState((state) => state.settings.data!);
     const isTurnstileEnabled = captcha.driver === 'turnstile' && captcha.turnstile?.siteKey;
     const isFriendlyEnabled = captcha.driver === 'friendly' && captcha.friendly?.siteKey;
     const isHCaptchaEnabled = captcha.driver === 'hcaptcha' && captcha.hcaptcha?.siteKey;
@@ -216,6 +216,36 @@ function LoginContainer() {
                     {isMCaptchaEnabled && (
                         <div className='mt-6'>
                             <p className='text-red-500'>mCaptcha implementation needed</p>
+                        </div>
+                    )}
+
+                    {/* OpenID Connect Login Button */}
+                    {openid?.enabled && (
+                        <div className={`mt-6`}>
+                            <div className='flex items-center my-4'>
+                                <div className='flex-grow border-t border-zinc-600'></div>
+                                <span className='flex-shrink mx-4 text-zinc-400 text-xs'>OR</span>
+                                <div className='flex-grow border-t border-zinc-600'></div>
+                            </div>
+                            <Button
+                                className={`relative w-full rounded-full bg-zinc-700 hover:bg-zinc-600 border-0 ring-0 outline-hidden font-bold text-sm py-2 hover:cursor-pointer flex items-center justify-center`}
+                                onClick={() => {
+                                    window.location.href = '/auth/openid';
+                                }}
+                                disabled={isSubmitting}
+                            >
+                                {openid.icon && (
+                                    <img
+                                        src={openid.icon}
+                                        alt=''
+                                        className='w-5 h-5 mr-2'
+                                        onError={(e) => {
+                                            e.currentTarget.style.display = 'none';
+                                        }}
+                                    />
+                                )}
+                                Sign in with {openid.name || 'OpenID Connect'}
+                            </Button>
                         </div>
                     )}
 

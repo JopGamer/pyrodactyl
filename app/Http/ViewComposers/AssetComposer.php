@@ -33,6 +33,13 @@ class AssetComposer
           'siteKey' => config('captcha.recaptcha.site_key', '')
         ],
       ],
+      'openid' => [
+        'enabled' => config('openid.enabled', false),
+        'client_id' => config('openid.client_id', ''),
+        'issuer' => config('openid.issuer', ''),
+        'name' => config('openid.name', ''),
+        'icon' => config('openid.icon', ''),
+      ],
     ]);
   }
 }

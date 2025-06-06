@@ -21,10 +21,20 @@ interface CaptchaConfig {
     };
 }
 
+// Define OpenID Connect configuration type
+interface OpenIDConfig {
+    enabled: boolean;
+    client_id: string;
+    issuer: string;
+    name?: string;
+    icon?: string;
+}
+
 export interface SiteSettings {
     name: string;
     locale: string;
     captcha: CaptchaConfig;
+    openid?: OpenIDConfig;
 }
 
 export interface SettingsStore {

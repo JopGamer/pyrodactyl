@@ -29,7 +29,15 @@ class SettingsServiceProvider extends ServiceProvider
     'captcha:turnstile:secret_key',
     'captcha:friendly:site_key',
     'captcha:friendly:secret_key',
-    // existing mail keys, etc...
+    'openid:enabled',
+    'openid:client_id',
+    'openid:client_secret',
+    'openid:issuer',
+    'openid:redirect',
+    'openid:discovery_url',
+    'openid:disable_registration',
+    'openid:name',
+    'openid:icon',
     'pterodactyl:guzzle:timeout',
     'pterodactyl:guzzle:connect_timeout',
     'pterodactyl:console:count',
@@ -61,6 +69,7 @@ class SettingsServiceProvider extends ServiceProvider
    */
   protected static array $encrypted = [
     'mail:mailers:smtp:password',
+    'openid:client_secret',
   ];
 
   /**
@@ -109,9 +118,16 @@ class SettingsServiceProvider extends ServiceProvider
         case 'null':
         case '(null)':
           $value = null;
+          break;
       }
 
       $config->set(str_replace(':', '.', $key), $value);
+      
+      // Special handling for services.openid mapping from openid config
+      if (str_starts_with($key, 'openid:') && !in_array($key, ['openid:enabled', 'openid:name', 'openid:icon'])) {
+        $serviceKey = 'services.' . str_replace(':', '.', $key);
+        $config->set($serviceKey, $value);
+      }
     }
   }
 

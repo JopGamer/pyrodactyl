@@ -104,6 +104,7 @@ export default defineConfig({
     },
 
     server: {
+        host: '127.0.0.1', // Force IPv4 only
         warmup: {
             clientFiles: [
                 'resources/scripts/index.tsx',
