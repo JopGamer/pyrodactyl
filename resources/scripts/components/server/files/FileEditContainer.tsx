@@ -238,7 +238,7 @@ export default () => {
                             <button
                                 style={{
                                     background:
-                                        'radial-gradient(109.26% 109.26% at 49.83% 13.37%, rgb(255, 52, 60) 0%, rgb(240, 111, 83) 100%)',
+                                        'radial-gradient(109.26% 109.26% at 49.83% 13.37%, #FF7000 0%, #F7FD00 100%)',
                                 }}
                                 className='h-[46px] pl-8 pr-6 py-3 border-[1px] border-[#ffffff12] rounded-l-full text-sm font-bold shadow-md cursor-pointer'
                                 onClick={() => save()}
@@ -249,7 +249,7 @@ export default () => {
                                 <DropdownMenuTrigger
                                     style={{
                                         background:
-                                            'radial-gradient(109.26% 109.26% at 49.83% 13.37%, rgb(255, 52, 60) 0%, rgb(240, 111, 83) 100%)',
+                                            'radial-gradient(109.26% 109.26% at 49.83% 13.37%, #FF7000 0%, #F7FD00 100%)',
                                     }}
                                     className='h-[46px] px-2 py-3 border-[1px] border-[#ffffff12] rounded-r-full text-sm font-bold shadow-md'
                                 >

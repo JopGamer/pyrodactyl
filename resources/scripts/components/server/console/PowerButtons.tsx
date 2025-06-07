@@ -73,7 +73,7 @@ export default ({ className }: PowerButtonProps) => {
                         status === 'offline'
                             ? {
                                   background:
-                                      'radial-gradient(109.26% 109.26% at 49.83% 13.37%, #FF343C 0%, #F06F53 100%)',
+                                      'radial-gradient(109.26% 109.26% at 49.83% 13.37%, #FF7000 0%, #F7FD00 100%)',
                                   opacity: 1,
                               }
                             : {
@@ -113,7 +113,7 @@ export default ({ className }: PowerButtonProps) => {
                               }
                             : {
                                   background:
-                                      'radial-gradient(109.26% 109.26% at 49.83% 13.37%, #FF343C 0%, #F06F53 100%)',
+                                      'radial-gradient(109.26% 109.26% at 49.83% 13.37%, #FF7000 0%, #F7FD00 100%)',
                                   opacity: 1,
                               }
                     }

@@ -11,7 +11,7 @@
             <meta name="csrf-token" content="{{ csrf_token() }}">
             <meta name="robots" content="noindex">
             <link rel="icon" type="image/png" href="/favicons/favicon-180x180.png">
-            <meta name="theme-color" content="#000000">
+            <meta name="theme-color" content="#ff7000">
         @show
 
         @section('user-data')

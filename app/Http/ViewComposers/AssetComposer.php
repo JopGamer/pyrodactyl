@@ -13,7 +13,7 @@ class AssetComposer
   public function compose(View $view): void
   {
     $view->with('siteConfiguration', [
-      'name' => config('app.name') ?? 'Pyrodactyl',
+      'name' => config('app.name') ?? 'Eternyx',
       'locale' => config('app.locale') ?? 'en',
       'captcha' => [
         'driver' => config('captcha.driver', 'none'),

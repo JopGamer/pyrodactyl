@@ -543,7 +543,7 @@ body {
 }
 
 .skin-blue .main-header .navbar .sidebar-toggle {
-    color: #fa4e49;
+    color: #ff7000;
     transition: background-color .2s;
 }
 
@@ -563,7 +563,7 @@ body {
 
 .skin-blue .main-header .navbar .sidebar-toggle:hover {
     background-color: #161616;
-    color: #fa4e49;
+    color: #ff7000;
 }
 
 .skin-blue .main-header .logo:hover {
@@ -586,9 +586,9 @@ body {
 }
 
 .skin-blue .sidebar-menu > li.active > a {
-    border-left-color: #f55d4f;
-    color: #f55d4f !important;
-    background: linear-gradient(90deg, rgba(248,81,74,0.20) 0%, rgba(248,81,74,0) 50%) !important;
+    border-left-color: #ff7000;
+    color: #ff7000 !important;
+    background: linear-gradient(90deg, rgba(255,112,0,0.20) 0%, rgba(255,112,0,0) 50%) !important;
 }
 
 .skin-blue .sidebar-menu > li:hover > a {
@@ -724,7 +724,7 @@ a {
 }
 
 .nav-tabs-custom > .nav-tabs > li.active {
-    border-top-color: #f55b4e;
+    border-top-color: #ff7000;
     border-top-width: 0px;
 }
 

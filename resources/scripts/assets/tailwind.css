@@ -275,8 +275,8 @@
     --color-rose-900: #881337;
     --color-rose-950: #4c0519;
 
-    --color-brand-grad: radial-gradient(109.26% 109.26% at 49.83% 13.37%, #ff343c 0%, #f06f53 100%);
-    --color-brand: #fa4e49;
+    --color-brand-grad: linear-gradient(135deg, #f7fd00 0%, #ff7000 100%);
+    --color-brand: #ff7000;
 
     --transition-duration-250: 250ms;
 }
@@ -296,5 +296,35 @@
     ::backdrop,
     ::file-selector-button {
         border-color: var(--color-gray-200, currentcolor);
+    }
+}
+
+@layer utilities {
+    .bg-custom-red {
+        background-color: #ff7000;
+    }
+    
+    .bg-custom-red-hover {
+        background-color: #e56300;
+    }
+    
+    .text-custom-red {
+        color: #ff7000;
+    }
+    
+    .border-custom-red {
+        border-color: #ff7000;
+    }
+    
+    .bg-custom-medium-gray {
+        background-color: #2a2a2a;
+    }
+    
+    .bg-custom-dark-gray {
+        background-color: #1a1a1a;
+    }
+    
+    .text-custom-light-gray {
+        color: #e5e5e5;
     }
 }

@@ -159,7 +159,7 @@ const ProjectSelector: React.FC<Props> = ({ appVersion, baseUrl, nonApiUrl }) =>
                             </div>
                             <div className='flex flex-col py-2 px-6 mx-6'>
                                 <button
-                                    className='flex items-center border-2 border-solid rounded-sm py-1 px-6 border-brand hover:border-white hover:bg-red-600 hover:scale-110 justify-center cursor-pointer'
+                                    className='flex items-center border-2 border-solid rounded-sm py-1 px-6 border-brand hover:border-white hover:bg-orange-600 hover:scale-110 justify-center cursor-pointer'
                                     onClick={() => setModalProject(project.project_id)}
                                 >
                                     <HugeIconsDownload className='px-2 mx-2' fill='currentColor' /> Install

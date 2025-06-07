@@ -42,7 +42,7 @@ const ApiKeyModal = ({ apiKey }: Props) => {
                 <Button
                     type='button'
                     onClick={() => dismiss()}
-                    className='bg-red-600 text-white hover:bg-red-700 px-6 py-2 rounded-md focus:outline-hidden focus:ring-2 focus:ring-gray-500 cursor-pointer'
+                    className='bg-orange-600 text-white hover:bg-orange-700 px-6 py-2 rounded-md focus:outline-hidden focus:ring-2 focus:ring-gray-500 cursor-pointer'
                 >
                     Close
                 </Button>
