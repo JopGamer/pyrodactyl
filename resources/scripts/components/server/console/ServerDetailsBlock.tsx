@@ -46,6 +46,17 @@ const ServerDetailsBlock = ({ className }: { className?: string }) => {
         [limits],
     );
 
+    // Maximums: if limit is 0, treat as Unlimited
+    const maxValues = useMemo(
+        () => ({
+            cpu: limits?.cpu === 0 ? 'Unlimited' : `${limits?.cpu ?? 'N/A'}%`,
+            memory:
+                limits?.memory === 0 ? 'Unlimited' : limits?.memory ? bytesToString(mbToBytes(limits.memory)) : 'N/A',
+            disk: limits?.disk === 0 ? 'Unlimited' : limits?.disk ? bytesToString(mbToBytes(limits.disk)) : 'N/A',
+        }),
+        [limits],
+    );
+
     const allocation = ServerContext.useStoreState((state) => {
         const match = state.server.data!.allocations.find((allocation) => allocation.isDefault);
 
@@ -108,7 +119,10 @@ const ServerDetailsBlock = ({ className }: { className?: string }) => {
                     {status === 'offline' ? (
                         <span className={'text-zinc-400'}>Offline</span>
                     ) : (
-                        <Limit limit={textLimits.cpu}>{stats.cpu.toFixed(2)}%</Limit>
+                        <>
+                            <Limit limit={textLimits.cpu}>{stats.cpu.toFixed(2)}%</Limit>
+                            <div className='text-xs text-zinc-400'>Max: {maxValues.cpu}</div>
+                        </>
                     )}
                 </StatBlock>
             </div>
@@ -126,7 +140,10 @@ const ServerDetailsBlock = ({ className }: { className?: string }) => {
                     {status === 'offline' ? (
                         <span className={'text-zinc-400'}>Offline</span>
                     ) : (
-                        <Limit limit={textLimits.memory}>{bytesToString(stats.memory)}</Limit>
+                        <>
+                            <Limit limit={textLimits.memory}>{bytesToString(stats.memory)}</Limit>
+                            <div className='text-xs text-zinc-400'>Max: {maxValues.memory}</div>
+                        </>
                     )}
                 </StatBlock>
             </div>
@@ -142,6 +159,7 @@ const ServerDetailsBlock = ({ className }: { className?: string }) => {
             >
                 <StatBlock title={'Storage'}>
                     <Limit limit={textLimits.disk}>{bytesToString(stats.disk)}</Limit>
+                    <div className='text-xs text-zinc-400'>Max: {maxValues.disk}</div>
                 </StatBlock>
             </div>
         </div>
