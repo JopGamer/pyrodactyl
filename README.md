@@ -53,6 +53,14 @@ See our [Installation](https://pyrodactyl.dev/docs/installation) docs page on ho
 
 Pyrodactyl has various effortless ways of starting up a ready-to-use, fully-featured development environment. See our [Local Development](https://pyrodactyl.dev/docs/local-development) documentation for more information.
 
+## Database Schema
+
+The database schema for Pyrodactyl is located in the `database/schema/` directory:
+
+- **MySQL Schema**: `database/schema/mysql-schema.sql` - Contains the complete database schema definition for MySQL/MariaDB databases.
+
+Database migrations are stored in `database/migrations/` and are managed by Laravel's migration system. The schema file is automatically generated and maintained by Laravel when running migrations.
+
 ## Star History
 
 <a href="https://star-history.com/#pyrohost/pyrodactyl&Date">
